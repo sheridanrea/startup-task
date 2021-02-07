@@ -2,14 +2,13 @@ version: "3.7"
 
 services:
     my-postgres:
-        image: postgres
+        build: .
         ports:
             - 5432:5432
         volumes:
             - my-postgres-data:/var/lib/postgresql/data
-        environment:
-            POSTGRES_USER: testuser
-            POSTGRES_PASSWORD: supersecret
+            - ./code:/code
+
 
     my-pgadmin:
         image: dpage/pgadmin4
