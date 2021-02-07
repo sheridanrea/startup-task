@@ -7,8 +7,7 @@ services:
             - 5432:5432
         volumes:
             - my-postgres-data:/var/lib/postgresql/data
-            - ./code:/code
-
+            - ${PWD}/code:/code
 
     my-pgadmin:
         image: dpage/pgadmin4
@@ -20,3 +19,4 @@ services:
 
 volumes:
     my-postgres-data:
+    code:
