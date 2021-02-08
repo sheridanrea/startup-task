@@ -1,7 +1,7 @@
 # possibilities for data, used for randomizing
 # color, price, size, date constructed
 
-COLOR = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
+COLORS = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
 MIN_PRICE = 30000
 MAX_PRICE = 3000000
 MIN_SQFT = 400

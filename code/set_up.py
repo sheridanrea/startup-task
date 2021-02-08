@@ -33,7 +33,7 @@ def create_table():
     cur.execute(create_table_command)
 
 def add_random_data(n):
-    house_data = [[random.choice(COLOR), random.randint(MIN_PRICE, MAX_PRICE), random.randint(MIN_SQFT, MAX_SQFT), random.randint(MIN_DATE, MAX_DATE)] for x in range(n)]
+    house_data = [[random.choice(COLORS), random.randint(MIN_PRICE, MAX_PRICE), random.randint(MIN_SQFT, MAX_SQFT), random.randint(MIN_DATE, MAX_DATE)] for x in range(n)]
     insert_data_sql = " INSERT INTO houses (color, price, sq_ft, date_constructed) VALUES (%s, %s, %s, %s)"
     cur.executemany(insert_data_sql, house_data)
 
