@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.9"
 
 services:
     my-postgres:
@@ -7,15 +7,50 @@ services:
             - 5432:5432
         volumes:
             - my-postgres-data:/var/lib/postgresql/data
-            - ${PWD}/code:/code
+            - ./code:/code
 
     my-pgadmin:
         image: dpage/pgadmin4
         ports:
-            - 80:80
+            - 8000:8000
         environment:
             PGADMIN_DEFAULT_EMAIL: test@gmail.com
             PGADMIN_DEFAULT_PASSWORD: supersecret
+
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        ports:
+            - 5672:5672
+            - 15672:15672
+        volumes:
+            - ./code:/code
+            - ./rmqconf/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+            - ./rmqconf/data:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
+            - ./rmqconf/logs:/var/log/rabbitmq/log
+
+    sender:
+        build:
+            context: .
+            dockerfile: Dockerfile-sender
+        ports:
+            - 5000:80
+        environment:
+            - RABBIT_HOSTNAME=rabbitmq
+        volumes:
+            - ./code:/code
+        depends_on:
+            - rabbitmq
+
+    receiver:
+        build:
+            context: .
+            dockerfile: Dockerfile-receiver
+        environment:
+            - RABBIT_HOSTNAME=rabbitmq
+        volumes:
+            - ./code:/code
+        depends_on:
+            -   rabbitmq
 
 volumes:
     my-postgres-data:

@@ -1,0 +1,8 @@
+FROM frolvlad/alpine-python3
+WORKDIR /code
+
+# install pika library for python-rabbitmq interactions
+RUN pip3 install pika
+
+# start rabbitmq receiver
+CMD python3 receive.py
